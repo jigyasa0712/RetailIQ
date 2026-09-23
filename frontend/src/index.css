@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-900: #134e4a;
+  --color-brand-950: #042f2e;
+  
+  --color-surface-light: rgba(255, 255, 255, 0.7);
+  --color-surface-dark: rgba(15, 23, 42, 0.7);
+  
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --card: rgba(255, 255, 255, 0.8);
+    --card-foreground: #0f172a;
+    --border: #e2e8f0;
+    --ring: #14b8a6;
+  }
+
+  .dark {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --card: rgba(15, 23, 42, 0.6);
+    --card-foreground: #f8fafc;
+    --border: #1e293b;
+    --ring: #14b8a6;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[var(--border)];
+  }
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased min-h-screen font-sans selection:bg-brand-500 selection:text-white transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-[var(--card)] backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+  }
+  
+  .glass-card {
+    @apply bg-[var(--card)] backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+  }
+}
