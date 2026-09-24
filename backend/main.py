@@ -236,7 +236,7 @@ Rules: ONLY raw SQL. No markdown. Start with SELECT. Table = retail_transactions
 Use total_sales for revenue. Use churned='Yes' for churn. LIMIT results to 20 rows."""
 
     sql_completion = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-20b",
         messages=[{"role": "user", "content": sql_prompt}]
     )
     sql_query = sql_completion.choices[0].message.content.strip().replace("```sql", "").replace("```", "").strip()
