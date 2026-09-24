@@ -45,10 +45,34 @@
 
 @layer components {
   .glass {
-    @apply bg-[var(--card)] backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+    @apply backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+    background-color: rgba(255, 255, 255, 0.92);
   }
-  
+  .dark .glass {
+    background-color: rgba(15, 23, 42, 0.85);
+  }
+
   .glass-card {
-    @apply bg-[var(--card)] backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    @apply backdrop-blur-xl border shadow-xl rounded-2xl p-4 sm:p-6 transition-all duration-300;
+    background-color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(226, 232, 240, 0.8);
+    color: var(--foreground);
+  }
+  .dark .glass-card {
+    background-color: rgba(15, 23, 42, 0.85);
+    border-color: rgba(30, 41, 59, 0.8);
+  }
+}
+
+@layer utilities {
+  /* Prevent content from going under notch / safe areas */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  /* Clamp text to prevent overflow on mobile */
+  .text-clamp {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

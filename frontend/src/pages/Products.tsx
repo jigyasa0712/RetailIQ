@@ -116,30 +116,53 @@ export const Products = () => {
           <TrendingUp size={18} className="text-brand-500" />
           <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Top 10 Products by Revenue</h3>
         </div>
-        <div className="overflow-x-auto">
+
+        {/* Mobile: Card list */}
+        <div className="flex flex-col gap-3 lg:hidden">
+          {(metrics?.top_by_revenue || []).map((p: any, i: number) => (
+            <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+              <span className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex-shrink-0 mt-0.5">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">{p.name}</p>
+                <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300">{p.category}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{p.brand}</span>
+                  <span className="text-xs text-amber-500 font-medium">{p.rating.toFixed(1)} ★</span>
+                </div>
+              </div>
+              <div className="text-right flex-shrink-0">
+                <p className="text-sm font-bold text-teal-600 dark:text-teal-400">₹{p.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+                <p className="text-xs text-rose-500">₹{p.returns.toLocaleString(undefined, { maximumFractionDigits: 0 })} ret.</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: Table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800">
-                <th className="text-left py-2 px-3 text-slate-500 font-medium">#</th>
-                <th className="text-left py-2 px-3 text-slate-500 font-medium">Product</th>
-                <th className="text-left py-2 px-3 text-slate-500 font-medium">Category</th>
-                <th className="text-left py-2 px-3 text-slate-500 font-medium">Brand</th>
-                <th className="text-left py-2 px-3 text-slate-500 font-medium">Rating</th>
-                <th className="text-right py-2 px-3 text-slate-500 font-medium">Revenue</th>
-                <th className="text-right py-2 px-3 text-slate-500 font-medium">Returns</th>
+              <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-100/70 dark:bg-slate-800/50">
+                <th className="text-left py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">#</th>
+                <th className="text-left py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Product</th>
+                <th className="text-left py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Category</th>
+                <th className="text-left py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Brand</th>
+                <th className="text-left py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Rating</th>
+                <th className="text-right py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Revenue</th>
+                <th className="text-right py-2 px-3 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Returns</th>
               </tr>
             </thead>
             <tbody>
               {(metrics?.top_by_revenue || []).map((p: any, i: number) => (
-                <tr key={i} className="border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                  <td className="py-2.5 px-3 font-medium text-slate-400">{i + 1}</td>
+                <tr key={i} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="py-2.5 px-3 font-medium text-slate-500 dark:text-slate-400">{i + 1}</td>
                   <td className="py-2.5 px-3 font-medium text-slate-700 dark:text-slate-200">{p.name}</td>
                   <td className="py-2.5 px-3">
                     <span className="px-2 py-0.5 rounded-full text-xs bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300">{p.category}</span>
                   </td>
-                  <td className="py-2.5 px-3 text-slate-500 dark:text-slate-400">{p.brand}</td>
+                  <td className="py-2.5 px-3 text-slate-600 dark:text-slate-300">{p.brand}</td>
                   <td className="py-2.5 px-3 text-amber-500 font-medium">{p.rating.toFixed(1)} ★</td>
-                  <td className="py-2.5 px-3 text-right font-semibold text-brand-600 dark:text-brand-400">
+                  <td className="py-2.5 px-3 text-right font-semibold text-teal-600 dark:text-teal-400">
                     ₹{p.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </td>
                   <td className="py-2.5 px-3 text-right text-rose-500">

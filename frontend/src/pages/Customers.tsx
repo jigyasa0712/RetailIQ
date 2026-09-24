@@ -246,47 +246,66 @@ export const Customers = () => {
           <Award size={18} className="text-brand-500" />
           <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Top 10 Customers by Revenue</h3>
         </div>
-        <div className="overflow-x-auto">
+
+        {/* Mobile: Card list */}
+        <div className="flex flex-col gap-3 lg:hidden">
+          {(metrics?.top_customers || []).map((c: any, i: number) => (
+            <div key={c.id} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+              <span className={`inline-flex w-8 h-8 rounded-full items-center justify-center text-xs font-bold flex-shrink-0 ${
+                i === 0 ? 'bg-amber-400 text-white' :
+                i === 1 ? 'bg-slate-400 text-white' :
+                i === 2 ? 'bg-orange-400 text-white' :
+                'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
+              }`}>{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-mono text-sm font-bold text-slate-800 dark:text-white">#{c.id}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{c.occupation || '—'} · {c.city || '—'} · {c.years} yrs</p>
+              </div>
+              <p className="text-sm font-bold text-teal-600 dark:text-teal-400 flex-shrink-0">
+                ₹{c.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              </p>
+            </div>
+          ))}
+          {!metrics?.top_customers?.length && (
+            <p className="py-8 text-center text-slate-400">Loading customer data…</p>
+          )}
+        </div>
+
+        {/* Desktop: Table */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
-                <th className="text-left py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">Rank</th>
-                <th className="text-left py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">Customer ID</th>
-                <th className="text-left py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">Occupation</th>
-                <th className="text-left py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">City</th>
-                <th className="text-left py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">Member Years</th>
-                <th className="text-right py-3 px-4 text-slate-500 font-semibold text-xs uppercase tracking-wide">Total Revenue</th>
+              <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-100/70 dark:bg-slate-800/50">
+                <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Rank</th>
+                <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Customer ID</th>
+                <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Occupation</th>
+                <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">City</th>
+                <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Member Years</th>
+                <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-300 font-semibold text-xs uppercase tracking-wide">Total Revenue</th>
               </tr>
             </thead>
             <tbody>
               {(metrics?.top_customers || []).map((c: any, i: number) => (
-                <tr
-                  key={c.id}
-                  className="border-b border-slate-50 dark:border-slate-800/50 hover:bg-slate-50/70 dark:hover:bg-slate-800/30 transition-colors"
-                >
+                <tr key={c.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                   <td className="py-3 px-4">
                     <span className={`inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold ${
                       i === 0 ? 'bg-amber-400 text-white' :
-                      i === 1 ? 'bg-slate-300 text-slate-700' :
+                      i === 1 ? 'bg-slate-400 text-white' :
                       i === 2 ? 'bg-orange-400 text-white' :
-                      'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                    }`}>
-                      {i + 1}
-                    </span>
+                      'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
+                    }`}>{i + 1}</span>
                   </td>
-                  <td className="py-3 px-4 font-mono text-slate-600 dark:text-slate-300">#{c.id}</td>
-                  <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{c.occupation || '—'}</td>
-                  <td className="py-3 px-4 text-slate-500 dark:text-slate-400">{c.city || '—'}</td>
-                  <td className="py-3 px-4 text-slate-500 dark:text-slate-400">{c.years} yrs</td>
-                  <td className="py-3 px-4 text-right font-bold text-brand-600 dark:text-brand-400">
+                  <td className="py-3 px-4 font-mono text-slate-700 dark:text-slate-200">#{c.id}</td>
+                  <td className="py-3 px-4 text-slate-700 dark:text-slate-200">{c.occupation || '—'}</td>
+                  <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{c.city || '—'}</td>
+                  <td className="py-3 px-4 text-slate-600 dark:text-slate-300">{c.years} yrs</td>
+                  <td className="py-3 px-4 text-right font-bold text-teal-600 dark:text-teal-400">
                     ₹{c.revenue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </td>
                 </tr>
               ))}
               {!metrics?.top_customers?.length && (
-                <tr>
-                  <td colSpan={6} className="py-12 text-center text-slate-400">Loading customer data…</td>
-                </tr>
+                <tr><td colSpan={6} className="py-12 text-center text-slate-400">Loading customer data…</td></tr>
               )}
             </tbody>
           </table>
